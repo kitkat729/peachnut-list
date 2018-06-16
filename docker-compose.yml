@@ -1,0 +1,21 @@
+version: '3.6'
+services:
+  # Build the image.
+  # The key name 'web' will become the image name suffix '_web'
+  web:
+    # Container name builds the container with this name. Otherwise, docker-compose chooses a random name 
+    container_name: 'peachnut-examples'
+    # Build context
+    build:
+      context: ./example
+      dockerfile: Dockerfile
+    # Bind Mount mounts (connects) the container host to the source directory.
+    # The host will reflect changes made in the image without having to rebuild the image 
+    # Without Bind Mount, Composer builds the source by copying the source directory into the image
+    volumes:
+      - '.:/usr/src/app'
+      - '/usr/src/app/node_modules'
+    # Port mapping remaps the service port with the new port for the container.
+    # Usage <container-port>:<service-port>
+    ports:
+      - '4200:3000'
