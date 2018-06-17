@@ -7,7 +7,7 @@ services:
     container_name: 'peachnut-examples'
     # Build context
     build:
-      context: ./example
+      context: .
       dockerfile: Dockerfile
     # Bind Mount mounts (connects) the container host to the source directory.
     # The host will reflect changes made in the image without having to rebuild the image 
