@@ -1,0 +1,31 @@
+version: '3.6'
+
+volumes:
+  example_modules:
+  peachnut_list_modules:
+
+services:
+  # Build the image.
+  # The key name 'web' will become the image name suffix '_web'
+  web:
+    # Container name builds the container with this name. Otherwise, docker-compose chooses a random name 
+    container_name: 'peachnut-list-examples'
+    # Build context
+    build: ./example
+      #context: ./example
+      #dockerfile: example/Dockerfile
+    # Bind Mount mounts (connects) the container host to the source directory.
+    # The host will reflect changes made in the image without having to rebuild the image 
+    # Without Bind Mount, Composer builds the source by copying the source directory into the image
+    volumes:
+      - ./example:/usr/src/app
+      - example_modules:/usr/src/app/node_modules
+    # Port mapping remaps the service port with the new port for the container.
+    # Usage <container-port>:<service-port>
+    ports:
+      - '4200:3000'
+  peachnut-list:
+    build: ./peachnut-list
+    volumes:
+      - ./peachnut-list:/usr/src/deps/peachnut-list
+      - peachnut_list_modules:/usr/src/deps/peachnut-list/node_modules
